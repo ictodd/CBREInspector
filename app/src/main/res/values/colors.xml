@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="cbreGreen">#006a4d</color>
+    <color name="cbreLime">#69be28</color>
+    <color name="cbreEnergizing">#bfd857</color>
+
+    <color name="cbreBlue">#00b2dd</color>
+    <color name="cbreMagenta">#ec008c</color>
+    <color name="cbrePurple">#a23f97</color>
+    <color name="cbreYellow">#ffdd00</color>
+    <color name="cbreOrange">#f58220</color>
+
+    <color name="cbreLightGrey">#f2f2f2</color>
+    <color name="cbreDarkGrey">#808080</color>
+
+</resources>

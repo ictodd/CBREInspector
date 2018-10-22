@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/cbreGreen</item>
+        <item name="colorPrimaryDark">@color/cbreDarkGrey</item>
+        <item name="colorAccent">@color/cbreLime</item>
+
+        <item name="android:buttonStyle">@style/button</item>
+
+    </style>
+
+    <style name="AppTheme.Main">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/cbreDarkGrey</item>
+        <item name="android:fontFamily">@font/futura_heavy</item>
+        <item name="android:textSize">@dimen/btn_txt_size</item>
+        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+
+</resources>

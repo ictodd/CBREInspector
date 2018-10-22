@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <!--Foundations-->
+    <TextView
+        android:text="Foundations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_construction_hotels_foundations"
+        android:tag="notes_construction_hotels_foundations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Floors-->
+    <TextView
+        android:text="Floors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_construction_hotels_floors"
+        android:tag="notes_construction_hotels_floors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--External Walls-->
+    <TextView
+        android:text="External Walls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_construction_hotels_external_walls"
+        android:tag="notes_construction_hotels_external_walls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Windows and Doors-->
+    <TextView
+        android:text="Windows and Doors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_construction_hotels_windows_doors"
+        android:tag="notes_construction_hotels_windows_doors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Roof-->
+    <TextView
+        android:text="Roof"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_construction_hotels_roof"
+        android:tag="notes_construction_hotels_roof"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+</LinearLayout>

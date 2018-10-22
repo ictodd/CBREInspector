@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:padding="16dp">
+    
+    <TextView
+        android:id="@+id/row_text_view_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="123 Property Street"
+        android:fontFamily="@font/futura_heavy"
+        android:textSize="15sp"
+        android:layout_marginBottom="3dp"
+        android:paddingLeft="16dp"/>
+    <TextView
+        android:id="@+id/row_text_view_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2 October 2018"
+        android:fontFamily="@font/futura_book"
+        android:textSize="10sp"
+        android:paddingLeft="16dp"
+        android:paddingBottom="5dp"/>
+
+</LinearLayout>

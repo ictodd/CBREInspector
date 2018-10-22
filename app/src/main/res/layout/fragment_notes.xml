@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1.0"
+    android:orientation="horizontal"
+    tools:context=".fragments.FragmentDraw">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/sections_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:text="Site Details"
+                android:id="@+id/btn_load_site_details_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Construction"
+                android:id="@+id/btn_load_construction_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Internal Finishes"
+                android:id="@+id/btn_load_internal_finishes_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Public Areas"
+                android:id="@+id/btn_load_public_areas_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/notes_main_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:background="@drawable/left_border_thick"
+        android:padding="10dp">
+
+        <ViewFlipper
+            android:id="@+id/view_flipper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include android:id="@+id/notes_site_details_hotels_include" layout="@layout/notes_site_details_hotels"/>
+            <include android:id="@+id/notes_construction_hotels_include" layout="@layout/notes_construction_hotels"/>
+            <include android:id="@+id/notes_internal_finishes_hotels_include" layout="@layout/notes_internal_finishes_hotels"/>
+            <include android:id="@+id/notes_public_areas_hotels_include" layout="@layout/notes_public_areas_hotels"/>
+
+        </ViewFlipper>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/new_inspection_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.FragmentNewInspection"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/full_border_thin">
+
+    <TextView
+        android:id="@+id/new_inspection_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Inspection"
+        android:textSize="35sp"
+        android:fontFamily="@font/futura_heavy"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/cbreGreen"/>
+
+    <TextView
+        android:text="Enter Address:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize" />
+    <EditText
+        android:id="@+id/new_inspection_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin" />
+
+    <TextView
+        android:text="Select Date:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize" />
+    <DatePicker
+        android:id="@+id/new_inspection_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize" />
+
+    <!-- Spinners side by side-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_marginTop="5dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical">
+            <TextView
+                android:text="Select Inspection Type:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:layout_marginBottom="@dimen/notes_field_name_margin"
+                android:textSize="@dimen/notes_field_name_fontsize" />
+            <Spinner
+                android:id="@+id/new_inspection_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:padding="@dimen/notes_edit_text_padding"
+                android:background="@drawable/full_border_thin"
+                android:textSize="@dimen/notes_edit_text_fontsize"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:text="Select Principal Inspector:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:layout_marginBottom="@dimen/notes_field_name_margin"
+                android:textSize="@dimen/notes_field_name_fontsize" />
+            <Spinner
+                android:id="@+id/new_inspection_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:padding="@dimen/notes_edit_text_padding"
+                android:background="@drawable/full_border_thin"
+                android:textSize="@dimen/notes_edit_text_fontsize"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_create_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create" />
+
+</LinearLayout>

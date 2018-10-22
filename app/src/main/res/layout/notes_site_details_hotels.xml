@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <!--Access-->
+    <TextView
+        android:text="Access"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_site_details_hotels_access"
+        android:tag="notes_site_details_hotels_access"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Surrounding Property Uses-->
+    <TextView
+        android:text="Surrounding Property Uses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_site_details_hotels_surrounding_uses"
+        android:tag="notes_site_details_hotels_surrounding_uses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Topography-->
+    <TextView
+        android:text="Topography"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_site_details_hotels_topography"
+        android:tag="notes_site_details_hotels_topography"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Previous Site Use-->
+    <TextView
+        android:text="Previous Site Use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_site_details_hotels_prev_site_use"
+        android:tag="notes_site_details_hotels_prev_site_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Asbestos-->
+    <TextView
+        android:text="Asbestos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_site_details_hotels_asbestos"
+        android:tag="notes_site_details_hotels_asbestos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+</LinearLayout>

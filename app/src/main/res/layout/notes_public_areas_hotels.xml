@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <!--Reception-->
+    <TextView
+        android:text="Reception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_reception"
+        android:tag="notes_public_areas_hotels_reception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--F&B-->
+    <TextView
+        android:text="Food and Beverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_food_and_beverage"
+        android:tag="notes_public_areas_hotels_food_and_beverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Conference-->
+    <TextView
+        android:text="Conference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_conference"
+        android:tag="notes_public_areas_hotels_conference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Leisure-->
+    <TextView
+        android:text="Leisure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_leisure"
+        android:tag="notes_public_areas_hotels_leisure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Car Parking-->
+    <TextView
+        android:text="Car Parking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_car_parking"
+        android:tag="notes_public_areas_hotels_car_parking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+    <!--Other-->
+    <TextView
+        android:text="Other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize"/>
+    <EditText
+        android:id="@+id/notes_public_areas_hotels_other"
+        android:tag="notes_public_areas_hotels_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin"
+        android:textSize="@dimen/notes_edit_text_fontsize"/>
+
+</LinearLayout>

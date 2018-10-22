@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">CBRE Inspector\'s Gadget</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">INSPECTOR\'S GADGET</string>
+    <string name="nav_header_subtitle">CBRE New Zealand</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="users_array">
+        <item>Todd Sandford</item>
+        <item>Peter Hamilton</item>
+    </string-array>
+
+    <string-array name="brush_colours_array">
+        <item>Black</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="brush_width_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="inspection_note_types">
+        <item>Hotel</item>
+        <item>Industrial</item>
+        <item>Office</item>
+        <item>Suburban Retail</item>
+        <item>Shopping Centre</item>
+        <item>Supermarket</item>
+        <item>Hardware Store</item>
+    </string-array>
+
+    <string-array name="principal_inspectors">
+        <item>Alina Barankova</item>
+        <item>Andrew Bragg</item>
+        <item>Anisha Segar</item>
+        <item>Anna Kennedy</item>
+        <item>Ben Walker</item>
+        <item>Bradley Unthank</item>
+        <item>Cameron Barber</item>
+        <item>Campbell Stewart</item>
+        <item>Caroline Fergusson</item>
+        <item>Celene Lim</item>
+        <item>Chris Barraclough</item>
+        <item>Daniel Speerstra</item>
+        <item>Duncan Watts</item>
+        <item>Frankie Li</item>
+        <item>Glenn Nicol</item>
+        <item>Jamahl Williams</item>
+        <item>Jamie Ellis</item>
+        <item>John Pryor</item>
+        <item>Joseph Petty</item>
+        <item>Kelly Beckett</item>
+        <item>Lawrence Lowe</item>
+        <item>Lewis England</item>
+        <item>Liam Kelly</item>
+        <item>Luke Hastie</item>
+        <item>Marius Ogg</item>
+        <item>Matthew Stanley</item>
+        <item>Michael Gunn</item>
+        <item>Michelle Ho</item>
+        <item>Milan Maharaj</item>
+        <item>Nick Hazlewood</item>
+        <item>Oliver Sardelic</item>
+        <item>Patrick Ryan</item>
+        <item>Peter Hamilton</item>
+        <item>Peter Schellekens</item>
+        <item>Samantha Watton</item>
+        <item>Scott Ansley</item>
+        <item>Timothy Arnott</item>
+        <item>Todd Sandford</item>
+        <item>Tom Stafford</item>
+        <item>William Bunt</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

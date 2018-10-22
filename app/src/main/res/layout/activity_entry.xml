@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".historic.OldSplashScreenActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <!-- HEADING -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cbre_logo_green"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:text="@string/nav_header_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:fontFamily="@font/futura_heavy"
+                android:textSize="25sp"
+                android:textColor="@color/cbreDarkGrey"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nav_header_subtitle"
+                android:fontFamily="@font/futura_book"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_gravity="left">
+
+            <TextView
+                android:text="Select User"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:layout_marginBottom="@dimen/notes_field_name_margin"
+                android:textSize="@dimen/notes_field_name_fontsize"/>
+            <Spinner
+                android:id="@+id/users_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futura_book"
+                android:padding="@dimen/notes_edit_text_padding"
+                android:background="@drawable/full_border_thin"
+                android:layout_marginBottom="@dimen/notes_edit_text_margin"
+                android:textSize="@dimen/notes_edit_text_fontsize"
+                android:textAlignment="center"/>
+
+            <Button
+                android:text="Load"
+                android:id="@+id/btn_load_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

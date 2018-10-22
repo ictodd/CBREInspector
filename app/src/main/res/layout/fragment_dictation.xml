@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fragments.FragmentCamera"
+android:weightSum="1.0">
+
+    <!--Voice Recording Gallery-->
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/right_border_thick">
+
+        <LinearLayout
+            android:id="@+id/camera_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- View Finder-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:hapticFeedbackEnabled="true"
+            android:id="@+id/dictation_record_btn"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            android:background="#00000000"
+            android:src="@drawable/microphone_disabled" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/drawing_root_relative_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentDraw"
+    android:orientation="horizontal"
+    android:animateLayoutChanges="true">
+
+    <!-- Gallery -->
+    <ScrollView
+        android:id="@+id/drawing_gallery_scroll_view"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/right_border_thick"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/drawing_gallery_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Canvas -->
+    <LinearLayout
+        android:id="@+id/draw_canvas_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+
+        <com.cbre.tsandford.cbreinspector.PaintView
+            android:id="@+id/paint_view"
+            android:layout_weight="90"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:weightSum="1.0"
+            android:background="@drawable/left_border_thick">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:weightSum="1.0"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:weightSum="1.0"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/draw_thin_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/thin_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+                    <ImageView
+                        android:id="@+id/draw_medium_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/medium_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:weightSum="1.0">
+
+                    <ImageView
+                        android:id="@+id/draw_thick_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/thick_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+
+                    <ImageView
+                        android:id="@+id/draw_highlighter_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/highlighter_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:weightSum="1.0"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:weightSum="1.0"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/draw_red_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/red_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+                    <ImageView
+                        android:id="@+id/draw_blue_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/blue_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal"
+                    android:weightSum="1.0">
+
+                    <ImageView
+                        android:id="@+id/draw_black_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/black_line_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+
+                    <ImageView
+                        android:id="@+id/draw_eraser_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/eraser_icon"
+                        android:padding="10dp"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:weightSum="4"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/draw_erase_all_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/delete_icon"
+                    android:padding="20dp"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/draw_new_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/new_icon"
+                    android:padding="20dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/draw_save_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_save"
+                    android:padding="20dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/draw_gallery_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gallery_icon"
+                    android:padding="20dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
