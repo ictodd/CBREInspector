@@ -13,7 +13,7 @@ public class Item {
     private String owner_name;
     private String item_root_path;
     private String item_name;
-    private String extension;
+    public String extension;
 
     Item(String item_name, String owner_name, String item_root_path, String extension){
         this.item_name = item_name;

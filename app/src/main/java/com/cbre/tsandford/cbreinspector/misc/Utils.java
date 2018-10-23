@@ -438,4 +438,25 @@ public class Utils {
         return cal;
     }
 
+    public static String getFileExtension(File file){
+        String extension = "";
+        try {
+            if (file != null && file.exists()) {
+                String name = file.getName();
+                extension = name.substring(name.lastIndexOf("."));
+            }
+        } catch (Exception e) {
+            extension = "";
+        }
+        return extension;
+
+    }
+
+    public static String getFieNameNoExtension(File file){
+        String extn = getFileExtension(file);
+        String dir = file.getParent();
+        String result = file.getPath().replace(dir + "/", "").replace(extn,"");
+        return result;
+    }
+
 }

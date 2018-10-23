@@ -1,28 +1,36 @@
 package com.cbre.tsandford.cbreinspector.fragments;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
+import com.cbre.tsandford.cbreinspector.misc.PlayButton;
+import com.cbre.tsandford.cbreinspector.misc.Utils;
+import com.cbre.tsandford.cbreinspector.misc.VoiceNoteCard;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class FragmentDictation extends Fragment {
 
@@ -37,7 +45,7 @@ public class FragmentDictation extends Fragment {
 
     // endregion
 
-    private ImageButton test_btn;
+    private PlayButton test_btn;
 
     public FragmentDictation() {
         // Required empty public constructor
@@ -63,7 +71,28 @@ public class FragmentDictation extends Fragment {
             }
         });
         gallery_view_parent = getActivity().findViewById(R.id.voice_note_gallery);
-        test_btn = getActivity().findViewById(R.id.btn_test_voice_playback);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, 0,0, "Edit");
+        menu.add(Menu.NONE, 1,1, "Delete");
+    }
+
+
+    // todo implement menu options
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch(item.getTitle().toString()){
+            case "Edit":
+                //do stuff
+                break;
+            case "Delete":
+                // do stuff
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -78,6 +107,12 @@ public class FragmentDictation extends Fragment {
             player.release();
             player = null;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        reload_voice_notes();
     }
 
     //endregion
@@ -107,38 +142,11 @@ public class FragmentDictation extends Fragment {
             recorder.stop();
             recorder.release();
             recorder = null;
+            reload_voice_notes();
         }
     }
 
     // endregion
-
-    // region Playing Methods
-
-    private void startPlaying(){
-        player = new MediaPlayer();
-        try{
-            player.setDataSource(active_clip);
-            player.prepare();
-            player.start();
-        }catch(IOException ex){
-            Log.d("TODD", "prepare() failed");
-        }
-    }
-
-    private void stopPlaying(){
-        player.release();
-        player = null;
-    }
-
-    // endregion
-
-    private void onPlay(boolean start){
-        if(start){
-            startPlaying();
-        }else{
-            stopPlaying();
-        }
-    }
 
     private void toggle_button() {
         if(recording){
@@ -162,7 +170,7 @@ public class FragmentDictation extends Fragment {
         List<Uri> voice_notes = AppState.ActiveInspection.audio_clips.get_all_items(10);
         for(Uri voice_note : voice_notes){
             if(!gallery_contains_voice_note(voice_note.getPath()))
-                add_voice_note_to_gallery(voice_note);
+                add_voice_note(voice_note);
         }
     }
 
@@ -175,27 +183,122 @@ public class FragmentDictation extends Fragment {
         return false;
     }
 
-    private void add_voice_note_to_gallery(Uri voice_note_uri){
-//
-//        LinearLayout.LayoutParams view_params = new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.WRAP_CONTENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT);
-//        view_params.bottomMargin = 5;
-//        view_params.leftMargin = 5;
-//        view_params.rightMargin = 5;
-//        view_params.topMargin = 5;
-//
-//        ImageView new_img_view = new ImageView(this.getActivity());
-//        new_img_view.setImageURI(voice_note_uri);
-//        new_img_view.setAdjustViewBounds(true);
-//        new_img_view.setTag(voice_note_uri.getPath());
-//
-//        this.registerForContextMenu(new_img_view);
-//
-//        Drawable background = getActivity().getDrawable(R.drawable.full_border_thin);
-//        new_img_view.setBackground(background);
-//
-//        this.gallery_view.addView(new_img_view, view_params);
+    // region Example Voice Note Card
+
+    /*
+     <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="3"
+        android:columnCount="3"
+        android:background="@drawable/full_border_thin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:padding="5dp"
+            android:fontFamily="@font/futura_heavy"
+            android:layout_gravity="center_vertical"
+            android:layout_rowWeight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="abc_street_audio_clips_1"
+            android:padding="5dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:padding="5dp"
+            android:fontFamily="@font/futura_heavy"
+            android:layout_gravity="center_vertical"
+            android:layout_rowWeight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23 Oct 2018 10:14 am"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tags:"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:padding="5dp"
+            android:fontFamily="@font/futura_heavy"
+            android:layout_gravity="center_vertical"
+            android:layout_rowWeight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"/>
+        <com.cbre.tsandford.cbreinspector.misc.PlayButton
+            android:id="@+id/btn_test_voice_playback"
+            android:padding="5dp"
+            android:layout_column="2"
+            android:layout_row="0"
+            android:layout_rowSpan="3"
+            android:hapticFeedbackEnabled="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:background="#00000000"
+            android:src="@drawable/play_button_disabled" />
+    </GridLayout>
+
+</LinearLayout>
+     */
+
+    // endregion
+
+    private void add_voice_note(Uri voiceNote){
+        VoiceNoteCard card = new VoiceNoteCard(this.getContext(), this.getActivity());
+        card.setAudioResource(voiceNote);
+        String name = getName(voiceNote);
+        String date = getDate(voiceNote);
+        String tags = getTags(voiceNote);
+        card.setHeadings(name, date, tags);
+        registerForContextMenu(card);
+        gallery_view_parent.addView(card);
+    }
+
+    private String getTags(Uri voice_note_uri) {
+        return "Tag 1, Tag 2";
+    }
+
+    private String getDate(Uri voice_note_uri) {
+        BasicFileAttributes attrs = null;
+        try{
+            Path path = Paths.get(voice_note_uri.getPath());
+            attrs = Files.readAttributes(path, BasicFileAttributes.class);
+        }catch(Exception e){
+            return "";
+        }
+        SimpleDateFormat df = new SimpleDateFormat("d MMM yy - h:mm a ", Locale.UK);
+        String result = "";
+        if(attrs != null){
+            result = df.format(attrs.creationTime().toMillis());
+        }
+        return result;
+
+    }
+
+    private String getName(Uri voice_note_uri) {
+        return Utils.getFieNameNoExtension(new File(voice_note_uri.getPath()));
     }
 
     // endregion

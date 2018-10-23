@@ -25,7 +25,6 @@ import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.CameraPreview;
 import com.cbre.tsandford.cbreinspector.misc.CameraSettings;
-import com.cbre.tsandford.cbreinspector.misc.ImageCompressor;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 
 import java.io.File;
@@ -39,8 +38,6 @@ public class FragmentCamera extends Fragment {
     private static final String TAG = "FragmentCamera";
 
     private Button btnCamera;
-    private ImageCompressor compressor;
-
     private LinearLayout gallery_view;
 
     private ImageView activeGalleryImage;
@@ -50,6 +47,8 @@ public class FragmentCamera extends Fragment {
     private FrameLayout previewWindow;
     private Camera.PictureCallback photo_callback;
 
+    // the below is not used any more, but might be useful in the future if users
+    // want to be able to take photos in different resolutions and ratios.
     private static final int JPEG_QUALITY = 50;
     private static final int PIC_WIDTH = 4032; // this stays static, height calc'd based on current settings
     private CameraSettings cameraSettings; // for height and width
