@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/new_inspection_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.FragmentEditVoiceNote"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/full_border_thin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Voice Note"
+        android:textSize="20sp"
+        android:paddingRight="200dp"
+        android:fontFamily="@font/futura_heavy"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/cbreGreen"/>
+
+    <TextView
+        android:text="Name:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:layout_marginBottom="@dimen/notes_field_name_margin"
+        android:textSize="@dimen/notes_field_name_fontsize" />
+    <EditText
+        android:id="@+id/voice_note_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/futura_book"
+        android:padding="@dimen/notes_edit_text_padding"
+        android:background="@drawable/full_border_thin"
+        android:layout_marginBottom="@dimen/notes_edit_text_margin" />
+
+    <Button
+        android:id="@+id/btn_update_metadata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Confirm" />
+
+</LinearLayout>

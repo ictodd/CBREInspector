@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -18,9 +21,10 @@ import android.widget.LinearLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
-import com.cbre.tsandford.cbreinspector.misc.PlayButton;
+import com.cbre.tsandford.cbreinspector.misc.voice.PlayButton;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
-import com.cbre.tsandford.cbreinspector.misc.VoiceNoteCard;
+import com.cbre.tsandford.cbreinspector.misc.voice.VoiceNoteCard;
+import com.cbre.tsandford.cbreinspector.misc.voice.VoiceNoteMetadata;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +50,7 @@ public class FragmentDictation extends Fragment {
     // endregion
 
     private PlayButton test_btn;
+    private VoiceNoteCard activeNote;
 
     public FragmentDictation() {
         // Required empty public constructor
@@ -78,21 +83,40 @@ public class FragmentDictation extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(Menu.NONE, 0,0, "Edit");
         menu.add(Menu.NONE, 1,1, "Delete");
+        activeNote = (VoiceNoteCard)v;
     }
 
 
     // todo implement menu options
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        if(activeNote == null)
+            return false;
+
         switch(item.getTitle().toString()){
             case "Edit":
-                //do stuff
+                loadEditMenu();
                 break;
             case "Delete":
                 // do stuff
                 break;
         }
         return true;
+    }
+
+    private void loadEditMenu() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+
+        FragmentEditVoiceNote frag = new FragmentEditVoiceNote();
+        VoiceNoteMetadata metadata = activeNote.getMetadata();
+        frag.init(metadata.getName());
+        frag.setDialogCloseHandler(new FragmentEditVoiceNote.CustomDialogListener() {
+            @Override
+            public void onDialogClose(String name) {
+                activeNote.updateName(name);
+            }
+        });
+        frag.show(fm, "fragment_edit_voice_note");
     }
 
     @Override
@@ -107,6 +131,7 @@ public class FragmentDictation extends Fragment {
             player.release();
             player = null;
         }
+        save_all_voice_note_metadata();
     }
 
     @Override
@@ -167,10 +192,19 @@ public class FragmentDictation extends Fragment {
 
     private void reload_voice_notes(){
         clear_gallery();
-        List<Uri> voice_notes = AppState.ActiveInspection.audio_clips.get_all_items(10);
+        List<Uri> voice_notes = AppState.ActiveInspection.audio_clips.get_all_items(30);
         for(Uri voice_note : voice_notes){
             if(!gallery_contains_voice_note(voice_note.getPath()))
                 add_voice_note(voice_note);
+        }
+    }
+
+    private void save_all_voice_note_metadata(){
+        int number_of_children = gallery_view_parent.getChildCount();
+        VoiceNoteCard card;
+        for(int i = 0; i < number_of_children; i ++){
+            card = (VoiceNoteCard)gallery_view_parent.getChildAt(i);
+            card.saveAllMetadataToFile();
         }
     }
 
@@ -183,124 +217,12 @@ public class FragmentDictation extends Fragment {
         return false;
     }
 
-    // region Example Voice Note Card
-
-    /*
-     <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:rowCount="3"
-        android:columnCount="3"
-        android:background="@drawable/full_border_thin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name:"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:padding="5dp"
-            android:fontFamily="@font/futura_heavy"
-            android:layout_gravity="center_vertical"
-            android:layout_rowWeight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="abc_street_audio_clips_1"
-            android:padding="5dp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:padding="5dp"
-            android:fontFamily="@font/futura_heavy"
-            android:layout_gravity="center_vertical"
-            android:layout_rowWeight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="23 Oct 2018 10:14 am"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tags:"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:padding="5dp"
-            android:fontFamily="@font/futura_heavy"
-            android:layout_gravity="center_vertical"
-            android:layout_rowWeight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="None"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"/>
-        <com.cbre.tsandford.cbreinspector.misc.PlayButton
-            android:id="@+id/btn_test_voice_playback"
-            android:padding="5dp"
-            android:layout_column="2"
-            android:layout_row="0"
-            android:layout_rowSpan="3"
-            android:hapticFeedbackEnabled="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitXY"
-            android:background="#00000000"
-            android:src="@drawable/play_button_disabled" />
-    </GridLayout>
-
-</LinearLayout>
-     */
-
-    // endregion
-
     private void add_voice_note(Uri voiceNote){
-        VoiceNoteCard card = new VoiceNoteCard(this.getContext(), this.getActivity());
+        VoiceNoteCard card = new VoiceNoteCard(this.getContext(), this.getActivity(), voiceNote.getPath());
         card.setAudioResource(voiceNote);
-        String name = getName(voiceNote);
-        String date = getDate(voiceNote);
-        String tags = getTags(voiceNote);
-        card.setHeadings(name, date, tags);
         registerForContextMenu(card);
         gallery_view_parent.addView(card);
     }
-
-    private String getTags(Uri voice_note_uri) {
-        return "Tag 1, Tag 2";
-    }
-
-    private String getDate(Uri voice_note_uri) {
-        BasicFileAttributes attrs = null;
-        try{
-            Path path = Paths.get(voice_note_uri.getPath());
-            attrs = Files.readAttributes(path, BasicFileAttributes.class);
-        }catch(Exception e){
-            return "";
-        }
-        SimpleDateFormat df = new SimpleDateFormat("d MMM yy - h:mm a ", Locale.UK);
-        String result = "";
-        if(attrs != null){
-            result = df.format(attrs.creationTime().toMillis());
-        }
-        return result;
-
-    }
-
-    private String getName(Uri voice_note_uri) {
-        return Utils.getFieNameNoExtension(new File(voice_note_uri.getPath()));
-    }
-
     // endregion
 
 }

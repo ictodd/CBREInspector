@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.cbre.tsandford.cbreinspector.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -30,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class Utils {
@@ -452,11 +458,54 @@ public class Utils {
 
     }
 
-    public static String getFieNameNoExtension(File file){
+    public static String getFileNameNoExtension(File file){
         String extn = getFileExtension(file);
         String dir = file.getParent();
         String result = file.getPath().replace(dir + "/", "").replace(extn,"");
         return result;
+    }
+
+    public static class JsonTools{
+        public JsonTools(){}
+
+        public static Map<String,Object> getMapObjects(String jsonFilePath){
+            Gson gson = new Gson();
+            String fileContents = null;
+            try {
+                fileContents = new String(Files.readAllBytes(Paths.get(jsonFilePath)), "UTF-8");
+            }catch(Exception ex){
+                Log.d("TODD","Utils.JsonTools.getMap(): Failed to read file " + jsonFilePath);
+            }
+            return gson.fromJson(fileContents, Map.class);
+        }
+
+        public static Map<String,String> getMapStrings(String jsonFilePath){
+            Gson gson = new Gson();
+            String fileContents = null;
+            try {
+                fileContents = new String(Files.readAllBytes(Paths.get(jsonFilePath)), "UTF-8");
+            }catch(Exception ex){
+                Log.d("TODD","Utils.JsonTools.getMap(): Failed to read file " + jsonFilePath);
+            }
+            return gson.fromJson(fileContents, Map.class);
+        }
+
+        public static String getPrettyJsonStrings(Map<String, String> data){
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting().serializeNulls();
+            Gson gson = builder.create();
+            return gson.toJson(data);
+        }
+
+        public static String getPrettyJsonObjects(Map<String, Object> data){
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting().serializeNulls();
+            Gson gson = builder.create();
+            return gson.toJson(data);
+        }
+
+
+
     }
 
 }

@@ -85,7 +85,7 @@ android:weightSum="1.0">
                     android:layout_column="1"
                     android:padding="5dp"
                     android:layout_gravity="center_vertical"/>
-                <com.cbre.tsandford.cbreinspector.misc.PlayButton
+                <com.cbre.tsandford.cbreinspector.misc.voice.PlayButton
                     android:id="@+id/btn_test_voice_playback"
                     android:padding="5dp"
                     android:layout_column="2"

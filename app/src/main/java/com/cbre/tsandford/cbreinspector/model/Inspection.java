@@ -148,10 +148,7 @@ public class Inspection {
 
     // todo refactor notes into notes class
     private String get_pretty_json_notes(Map<String, String> data){
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting().serializeNulls();
-        Gson gson = builder.create();
-        return gson.toJson(data);
+        return Utils.JsonTools.getPrettyJsonStrings(data);
     }
 
     public void save_notes(){
@@ -164,15 +161,7 @@ public class Inspection {
     }
 
     private Map<String,String> populate_notes_from_file(String filePath){
-        Gson gson = new Gson();
-        String fileContents = null;
-        try {
-            fileContents = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8");
-        }catch(Exception ex){
-            Log.d("TODD","Inspection.populate_notes_from_file() " +
-                    ": Failed to read file " + filePath);
-        }
-        return gson.fromJson(fileContents, Map.class);
+        return Utils.JsonTools.getMapStrings(filePath);
     }
 
     public void update_info(Map<String, String> new_data){

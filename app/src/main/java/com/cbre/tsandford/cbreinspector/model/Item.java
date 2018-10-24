@@ -24,11 +24,15 @@ public class Item {
 
     public List<Uri> get_all_items(int max_items) {
         List<Uri> result = new ArrayList<>();
-        File[] pics = new File(item_root_path).listFiles();
-        if(pics != null) {
-            for (int i = 0; i < pics.length; i++) {
+        String extension;
+        File[] files = new File(item_root_path).listFiles();
+        if(files != null) {
+            for (int i = 0; i < files.length; i++) {
                 if(i > max_items) break;
-                result.add(Uri.fromFile(pics[i]));
+                extension = Utils.getFileExtension(files[i]);
+                if(extension.equals("." + this.extension)){
+                    result.add(Uri.fromFile(files[i]));
+                }
             }
         }
         return result;

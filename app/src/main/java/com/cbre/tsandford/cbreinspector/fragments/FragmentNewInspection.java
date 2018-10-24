@@ -1,8 +1,6 @@
 package com.cbre.tsandford.cbreinspector.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,7 +20,6 @@ import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 import com.cbre.tsandford.cbreinspector.model.Inspection;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
