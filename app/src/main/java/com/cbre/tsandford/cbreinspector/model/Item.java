@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Item {
 
-    private String owner_name;
-    private String item_root_path;
-    private String item_name;
+    protected String owner_name;
+    protected String item_root_path;
+    protected String item_name;
     public String extension;
 
     Item(String item_name, String owner_name, String item_root_path, String extension){
@@ -32,6 +32,22 @@ public class Item {
                 extension = Utils.getFileExtension(files[i]);
                 if(extension.equals("." + this.extension)){
                     result.add(Uri.fromFile(files[i]));
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<File> get_all_items_as_file_list(int max_items) {
+        List<File> result = new ArrayList<>();
+        String extension;
+        File[] files = new File(item_root_path).listFiles();
+        if(files != null) {
+            for (int i = 0; i < files.length; i++) {
+                if(i > max_items) break;
+                extension = Utils.getFileExtension(files[i]);
+                if(extension.equals("." + this.extension)){
+                    result.add(files[i]);
                 }
             }
         }

@@ -2,13 +2,12 @@ package com.cbre.tsandford.cbreinspector.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraDevice;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -26,6 +25,7 @@ import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.CameraPreview;
 import com.cbre.tsandford.cbreinspector.misc.CameraSettings;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
+import com.cbre.tsandford.cbreinspector.model.PictureItem;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,6 +46,11 @@ public class FragmentCamera extends Fragment {
     private CameraPreview cameraPreview;
     private FrameLayout previewWindow;
     private Camera.PictureCallback photo_callback;
+
+    private PictureItem inspectionPictures;
+
+    private final double THUMBNAIL_SCALE = 0.2;
+    private final int THUMBNAIL_COMPRESSION = 30;
 
     // the below is not used any more, but might be useful in the future if users
     // want to be able to take photos in different resolutions and ratios.
@@ -81,6 +86,8 @@ public class FragmentCamera extends Fragment {
             }
         });
 
+        this.inspectionPictures = AppState.ActiveInspection.pictures;
+
         reload_pics();
     }
 
@@ -96,22 +103,38 @@ public class FragmentCamera extends Fragment {
         set_up_camera();
     }
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
         // make sure i haven't accidentally registered another view for this menu...
         if(!(v instanceof android.widget.ImageView)) return;
         activeGalleryImage = (ImageView)v;
-        menu.add(Menu.NONE, 0,0, "Delete");
+        menu.add(Menu.NONE,0,0,"Preview");
+        menu.add(Menu.NONE, 1,1, "Delete");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        // only using a delete option right now...
-        String image_file_path = activeGalleryImage.getTag().toString();
-        new File(image_file_path).delete();
-        reload_pics();
+        File activeImageFile = new File(activeGalleryImage.getTag().toString());
+        switch(item.getTitle().toString()){
+            case "Delete":
+                inspectionPictures.deletePic(activeImageFile);
+                reload_pics();
+                break;
+            case "Preview":
+                loadPreview(activeImageFile);
+                break;
+
+        }
+
         return true;
+    }
+
+    private void loadPreview(File activeImageFile) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentPicPreview frag = new FragmentPicPreview();
+        frag.init(inspectionPictures.getPic(activeImageFile).getMain());
+        frag.show(fm,"Pic_Preview");
     }
 
     // region Image and Gallery Functions
@@ -122,11 +145,12 @@ public class FragmentCamera extends Fragment {
 
     private void reload_pics(){
         clear_gallery();
-        List<Uri> pics = AppState.ActiveInspection.pictures.get_all_items(5);
-        for(Uri pic : pics){
-            if(!gallery_contains_pic(pic.getPath()))
-                add_image_to_gallery(pic);
-        }
+        inspectionPictures.RefreshItems();
+        List<PictureItem.Pic> pics = inspectionPictures.getPicItems();
+        for(PictureItem.Pic pic : pics)
+            if(pic.hasThumb() && !gallery_contains_pic(pic.getThumb().getPath()))
+                add_image_to_gallery(pic.getThumb());
+
     }
 
     private boolean gallery_contains_pic(String path){
@@ -138,7 +162,7 @@ public class FragmentCamera extends Fragment {
         return false;
     }
 
-    private void add_image_to_gallery(Uri image_uri){
+    private void add_image_to_gallery(File file){
 
         LinearLayout.LayoutParams view_params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -149,9 +173,9 @@ public class FragmentCamera extends Fragment {
         view_params.topMargin = 5;
 
         ImageView new_img_view = new ImageView(this.getActivity());
-        new_img_view.setImageURI(image_uri);
+        new_img_view.setImageURI(Uri.fromFile(file));
         new_img_view.setAdjustViewBounds(true);
-        new_img_view.setTag(image_uri.getPath());
+        new_img_view.setTag(file.getPath());
 
         this.registerForContextMenu(new_img_view);
 
@@ -212,11 +236,16 @@ public class FragmentCamera extends Fragment {
                         Log.d(TAG, "Error accessing file: " + e.getMessage());
                     }
 
+                    create_thumbnail(pictureFile);
                     reload_pics();
                     restart_camera_preview();
                 }
             };
         }
+    }
+
+    private void create_thumbnail(File pictureFile) {
+         Utils.ImageTools.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
     }
 
     private void release_camera(){

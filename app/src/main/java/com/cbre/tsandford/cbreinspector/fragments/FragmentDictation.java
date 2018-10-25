@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
+import com.cbre.tsandford.cbreinspector.misc.PromptRunnable;
 import com.cbre.tsandford.cbreinspector.misc.voice.PlayButton;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 import com.cbre.tsandford.cbreinspector.misc.voice.VoiceNoteCard;
@@ -49,7 +50,6 @@ public class FragmentDictation extends Fragment {
 
     // endregion
 
-    private PlayButton test_btn;
     private VoiceNoteCard activeNote;
 
     public FragmentDictation() {
@@ -86,8 +86,6 @@ public class FragmentDictation extends Fragment {
         activeNote = (VoiceNoteCard)v;
     }
 
-
-    // todo implement menu options
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if(activeNote == null)
@@ -98,10 +96,36 @@ public class FragmentDictation extends Fragment {
                 loadEditMenu();
                 break;
             case "Delete":
-                // do stuff
+                deleteActiveCard();
                 break;
         }
         return true;
+    }
+
+    private void deleteActiveCard() {
+        Utils.showYesNoDialog(getActivity(),
+                "Confirm Delete",
+                "Are you sure you want to delete this voice note?",
+                new PromptRunnable(){
+                    @Override
+                    public void run() {
+                        File voiceFile = new File(activeNote.getTag().toString());
+                        File metaFile = new File(activeNote.getMetadata().getMetadataPath());
+                        try{
+                            Files.delete(voiceFile.toPath());
+                            Files.delete(metaFile.toPath());
+                        }catch(Exception ex){
+                            Log.d("TODD", "failed to delete voice and meta files");
+                        }
+                        reload_voice_notes();
+                    }
+                },
+                new PromptRunnable(){
+                    @Override
+                    public void run() {
+                        // blank for no
+                    }
+                });
     }
 
     private void loadEditMenu() {
@@ -114,6 +138,7 @@ public class FragmentDictation extends Fragment {
             @Override
             public void onDialogClose(String name) {
                 activeNote.updateName(name);
+                activeNote.saveAllMetadataToFile();
             }
         });
         frag.show(fm, "fragment_edit_voice_note");

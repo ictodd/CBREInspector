@@ -53,7 +53,7 @@ public class Inspection {
     private String info_file_path;
     private String notes_type;
 
-    public Item pictures;
+    public PictureItem pictures;
     public Item drawings;
     public Item audio_clips;
     public Item annotations;
@@ -114,7 +114,7 @@ public class Inspection {
         this.notes_file_path = this.root_path + "/" + NOTES_JSON;
         this.info_file_path = this.root_path + "/" + INFO_JSON;
 
-        this.pictures = new Item("pic", internal_name, this.root_path + "/pics", "jpg");
+        this.pictures = new PictureItem("pic", internal_name, this.root_path + "/pics", "jpg");
         this.drawings = new Item("drawing", internal_name, this.root_path + "/drawings", "jpg");
         this.audio_clips = new Item("audio_clips", internal_name, this.root_path + "/audio_clips", "3gp");
         this.annotations = new Item("annotations", internal_name, this.root_path + "/annotations", "jpg");

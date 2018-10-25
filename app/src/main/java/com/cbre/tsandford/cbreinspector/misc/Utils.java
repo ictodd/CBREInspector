@@ -1,16 +1,17 @@
 package com.cbre.tsandford.cbreinspector.misc;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -465,6 +466,12 @@ public class Utils {
         return result;
     }
 
+    public static File getFilePathWithSuffix(File file, String suffix){
+        String ex = Utils.GetFileExtension(file);
+        String newFilePath = file.getPath().replace("/" + file.getName(), "") + "/" + file.getName().replace(ex, "") + "_" + suffix + ex;
+        return new File(newFilePath);
+    }
+
     public static class JsonTools{
         public JsonTools(){}
 
@@ -505,6 +512,100 @@ public class Utils {
         }
 
 
+
+    }
+
+    public static class ImageTools{
+
+        public ImageTools(){}
+
+        public static File getCompressedImage(File image, int compression){
+
+            File compressedFile = Utils.getFilePathWithSuffix(image, "compressed");
+            Utils.MakeFile(compressedFile.getPath());
+
+            try(FileOutputStream compressedPhoto = new FileOutputStream(compressedFile)) {
+
+                Bitmap bitmap = BitmapFactory.decodeFile(image.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, compression, compressedPhoto);
+                compressedPhoto.flush();
+                compressedPhoto.close();
+                return compressedFile;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        public static File ScaleImage(File fileIn, int width, int height, int compression){
+
+            File scaledFile = Utils.getFilePathWithSuffix(fileIn, "scaled");
+            Utils.MakeFile(scaledFile.getPath());
+
+            try(FileOutputStream fos = new FileOutputStream(scaledFile)){
+
+                Bitmap original = BitmapFactory.decodeFile(fileIn.getPath());
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(original, width, height, true);
+                scaledBitmap.compress(Bitmap.CompressFormat.JPEG, compression, fos);
+                return scaledFile;
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+
+        public static File ScaleImage(File fileIn, double scale, int compression){
+
+            Bitmap original = BitmapFactory.decodeFile(fileIn.getPath());
+
+            int originalHeight = original.getHeight();
+            int originalWidth = original.getWidth();
+
+            int newHeight = (int)(scale * originalHeight);
+            int newWidth = (int)(scale * originalWidth);
+
+            File scaledFile = Utils.getFilePathWithSuffix(fileIn, "scaled");
+            Utils.MakeFile(scaledFile.getPath());
+
+            try(FileOutputStream fos = new FileOutputStream(scaledFile)){
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(original, newWidth, newHeight, true);
+                scaledBitmap.compress(Bitmap.CompressFormat.JPEG, compression, fos);
+                return scaledFile;
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+        public static File ScaleImage(File fileIn, File fileOut, int width, int height){
+
+            final int FULL_QUALITY = 100;
+            Utils.MakeFile(fileOut.getPath());
+
+            try(FileOutputStream fos = new FileOutputStream(fileOut)){
+
+                Bitmap original = BitmapFactory.decodeFile(fileIn.getPath());
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(original, width, height, true);
+                scaledBitmap.compress(Bitmap.CompressFormat.JPEG, FULL_QUALITY, fos);
+                return fileOut;
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
 
     }
 

@@ -20,6 +20,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    private Camera.Size mCurrentSize;
 
     private CameraSettings mCameraSettings;
 
@@ -84,12 +85,16 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Camera.Parameters params = mCamera.getParameters();
         params.setJpegQuality(mCameraSettings.get_jpeg_quality());
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        Camera.Size optimal_size = getOptimalSize(params.getSupportedPictureSizes(),
+        mCurrentSize = getOptimalSize(params.getSupportedPictureSizes(),
                 mCameraSettings.get_pic_width(),
                 mCameraSettings.get_pic_height());
-        params.setPictureSize(optimal_size.width, optimal_size.height);
+        params.setPictureSize(mCurrentSize.width, mCurrentSize.height);
         //params.setPreviewSize(optimal_size.width, optimal_size.height);
         mCamera.setParameters(params);
+    }
+
+    public double currentRatio(){
+        return mCurrentSize.width / mCurrentSize.height;
     }
 
     private Camera.Size getOptimalSize(List<Camera.Size> sizes, int w, int h) {
@@ -100,15 +105,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         Camera.Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
 
-        int targetHeight = h;
-
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
             double ratio = (double) size.width / size.height;
             if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
-            if (Math.abs(size.height - targetHeight) < minDiff) {
+            if (Math.abs(size.height - h) < minDiff) {
                 optimalSize = size;
-                minDiff = Math.abs(size.height - targetHeight);
+                minDiff = Math.abs(size.height - h);
             }
         }
 
@@ -116,9 +119,9 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if (optimalSize == null) {
             minDiff = Double.MAX_VALUE;
             for (Camera.Size size : sizes) {
-                if (Math.abs(size.height - targetHeight) < minDiff) {
+                if (Math.abs(size.height - h) < minDiff) {
                     optimalSize = size;
-                    minDiff = Math.abs(size.height - targetHeight);
+                    minDiff = Math.abs(size.height - h);
                 }
             }
         }

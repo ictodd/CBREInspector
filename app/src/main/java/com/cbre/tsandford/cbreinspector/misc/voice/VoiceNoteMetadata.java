@@ -60,7 +60,7 @@ public class VoiceNoteMetadata {
         }catch(Exception e){
             return "";
         }
-        SimpleDateFormat df = new SimpleDateFormat("d MMM yy - h:mm a ", Locale.UK);
+        SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yy - h:mm a ", Locale.UK);
         String result = "";
         if(attrs != null){
             result = df.format(attrs.creationTime().toMillis());

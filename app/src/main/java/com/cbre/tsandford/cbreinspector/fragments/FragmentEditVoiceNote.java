@@ -59,7 +59,7 @@ public class FragmentEditVoiceNote extends DialogFragment {
             }
         });
 
-        this.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //this.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     public void init(String name){
