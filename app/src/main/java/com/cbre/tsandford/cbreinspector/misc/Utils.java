@@ -472,8 +472,20 @@ public class Utils {
         return new File(newFilePath);
     }
 
-    public static class JsonTools{
-        public JsonTools(){}
+    public static class Math{
+        public static int Clamp(int x, int min, int max) {
+            if (x > max) {
+                return max;
+            }
+            if (x < min) {
+                return min;
+            }
+            return x;
+        }
+    }
+
+    public static class Json {
+        public Json(){}
 
         public static Map<String,Object> getMapObjects(String jsonFilePath){
             Gson gson = new Gson();
@@ -481,7 +493,7 @@ public class Utils {
             try {
                 fileContents = new String(Files.readAllBytes(Paths.get(jsonFilePath)), "UTF-8");
             }catch(Exception ex){
-                Log.d("TODD","Utils.JsonTools.getMap(): Failed to read file " + jsonFilePath);
+                Log.d("TODD","Utils.Json.getMap(): Failed to read file " + jsonFilePath);
             }
             return gson.fromJson(fileContents, Map.class);
         }
@@ -492,7 +504,7 @@ public class Utils {
             try {
                 fileContents = new String(Files.readAllBytes(Paths.get(jsonFilePath)), "UTF-8");
             }catch(Exception ex){
-                Log.d("TODD","Utils.JsonTools.getMap(): Failed to read file " + jsonFilePath);
+                Log.d("TODD","Utils.Json.getMap(): Failed to read file " + jsonFilePath);
             }
             return gson.fromJson(fileContents, Map.class);
         }
@@ -515,9 +527,9 @@ public class Utils {
 
     }
 
-    public static class ImageTools{
+    public static class Image {
 
-        public ImageTools(){}
+        public Image(){}
 
         public static File getCompressedImage(File image, int compression){
 

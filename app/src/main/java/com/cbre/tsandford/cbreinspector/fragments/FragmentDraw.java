@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
-import com.cbre.tsandford.cbreinspector.PaintView;
+import com.cbre.tsandford.cbreinspector.misc.drawing.PaintView;
 import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.PromptRunnable;
 import com.cbre.tsandford.cbreinspector.misc.Utils;

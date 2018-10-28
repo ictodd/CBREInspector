@@ -48,6 +48,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"/>
 
+            <Button
+                android:text="Back of House"
+                android:id="@+id/btn_load_back_of_house_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Rooms"
+                android:id="@+id/btn_load_rooms_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Services"
+                android:id="@+id/btn_load_services_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Bldg Cond / Capex"
+                android:id="@+id/btn_load_capex_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Other"
+                android:id="@+id/btn_load_other_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
+            <Button
+                android:text="Operational"
+                android:id="@+id/btn_load_operational_hotels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"/>
+
         </LinearLayout>
 
     </ScrollView>
@@ -69,6 +111,12 @@
             <include android:id="@+id/notes_construction_hotels_include" layout="@layout/notes_construction_hotels"/>
             <include android:id="@+id/notes_internal_finishes_hotels_include" layout="@layout/notes_internal_finishes_hotels"/>
             <include android:id="@+id/notes_public_areas_hotels_include" layout="@layout/notes_public_areas_hotels"/>
+            <include android:id="@+id/notes_back_of_house_hotels_include" layout="@layout/notes_back_of_house_hotels"/>
+            <include android:id="@+id/notes_rooms_hotels_include" layout="@layout/notes_rooms_hotels"/>
+            <include android:id="@+id/notes_services_hotels_include" layout="@layout/notes_services_hotels"/>
+            <include android:id="@+id/notes_capex_hotels_include" layout="@layout/notes_capex_hotels"/>
+            <include android:id="@+id/notes_other_hotels_include" layout="@layout/notes_other_hotels"/>
+            <include android:id="@+id/notes_operational_hotels_include" layout="@layout/notes_operational_hotels"/>
 
         </ViewFlipper>
 

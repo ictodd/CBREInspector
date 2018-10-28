@@ -1,4 +1,4 @@
-package com.cbre.tsandford.cbreinspector.misc;
+package com.cbre.tsandford.cbreinspector.misc.voice;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

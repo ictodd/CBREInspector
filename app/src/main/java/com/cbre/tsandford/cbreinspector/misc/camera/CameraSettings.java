@@ -1,4 +1,4 @@
-package com.cbre.tsandford.cbreinspector.misc;
+package com.cbre.tsandford.cbreinspector.misc.camera;
 
 // manages height and width that gets set in Camera.Parameters
 

@@ -1,13 +1,8 @@
 package com.cbre.tsandford.cbreinspector.model;
 
-import android.util.Log;
-
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,7 +143,7 @@ public class Inspection {
 
     // todo refactor notes into notes class
     private String get_pretty_json_notes(Map<String, String> data){
-        return Utils.JsonTools.getPrettyJsonStrings(data);
+        return Utils.Json.getPrettyJsonStrings(data);
     }
 
     public void save_notes(){
@@ -161,7 +156,7 @@ public class Inspection {
     }
 
     private Map<String,String> populate_notes_from_file(String filePath){
-        return Utils.JsonTools.getMapStrings(filePath);
+        return Utils.Json.getMapStrings(filePath);
     }
 
     public void update_info(Map<String, String> new_data){

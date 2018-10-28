@@ -1,7 +1,5 @@
 package com.cbre.tsandford.cbreinspector.misc.voice;
 
-import android.support.annotation.Nullable;
-
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 
 import java.io.File;
@@ -37,7 +35,7 @@ public class VoiceNoteMetadata {
     public VoiceNoteMetadata(File recordingFile, File metadataFile){
         data = new HashMap<>();
         if(Files.exists(metadataFile.toPath())){
-            this.data = Utils.JsonTools.getMapObjects(metadataFile.getPath());
+            this.data = Utils.Json.getMapObjects(metadataFile.getPath());
             unpackData();
         }
         this.recordingPath = recordingFile.getPath();
@@ -142,7 +140,7 @@ public class VoiceNoteMetadata {
         if(!Files.exists(new File(this.metadataPath).toPath()))
             Utils.MakeFile(this.metadataPath);
 
-        String json = Utils.JsonTools.getPrettyJsonObjects(getData());
+        String json = Utils.Json.getPrettyJsonObjects(getData());
         Utils.WriteToFile(json, this.metadataPath);
     }
 
@@ -150,7 +148,7 @@ public class VoiceNoteMetadata {
         if(!Files.exists(new File(this.metadataPath).toPath()))
             return;
 
-        setData(Utils.JsonTools.getMapObjects(this.metadataPath));
+        setData(Utils.Json.getMapObjects(this.metadataPath));
 
     }
 

@@ -74,6 +74,24 @@ public class FragmentNotes extends Fragment implements View.OnClickListener {
             case R.id.btn_load_public_areas_hotels:
                 includeView = getActivity().findViewById(R.id.notes_public_areas_hotels_include);
                 break;
+            case R.id.btn_load_back_of_house_hotels:
+                includeView = getActivity().findViewById(R.id.notes_back_of_house_hotels_include);
+                break;
+            case R.id.btn_load_rooms_hotels:
+                includeView = getActivity().findViewById(R.id.notes_rooms_hotels_include);
+                break;
+            case R.id.btn_load_services_hotels:
+                includeView = getActivity().findViewById(R.id.notes_services_hotels_include);
+                break;
+            case R.id.btn_load_capex_hotels:
+                includeView = getActivity().findViewById(R.id.notes_capex_hotels_include);
+                break;
+            case R.id.btn_load_other_hotels:
+                includeView = getActivity().findViewById(R.id.notes_other_hotels_include);
+                break;
+            case R.id.btn_load_operational_hotels:
+                includeView = getActivity().findViewById(R.id.notes_operational_hotels_include);
+                break;
         }
 
         if(includeView != null){
@@ -134,6 +152,29 @@ public class FragmentNotes extends Fragment implements View.OnClickListener {
         return result;
 
     }
+
+    // todo make new json format
+
+    // example of new json format
+    /*
+            {
+          "Info":{
+            "notesType": "Hotel"
+          },
+          "Sections":{
+            "Public Areas":{
+              "Car Parking":{
+                "codename": "notes_public_areas_hotels_car_parking",
+                "content" : "She folded her handkerchief neatly.\nShe only paints with bold colors; she does not like pastels.\nI am never at home on Sundays."
+              },
+              "Food and Beverage":{
+                "codename": "notes_public_areas_hotels_car_parking",
+                "content" :"She folded her handkerchief neatly.\nShe only paints with bold colors; she does not like pastels.\nI am never at home on Sundays."
+              }
+            }
+          }
+        }
+     */
 
     private void AddEditTextViewsToHashMap(ViewGroup view, Map<String, String> resultToAddTo){
         EditText noteField;

@@ -37,7 +37,7 @@
         android:weightSum="100">
 
 
-        <com.cbre.tsandford.cbreinspector.PaintView
+        <com.cbre.tsandford.cbreinspector.misc.drawing.PaintView
             android:id="@+id/paint_view"
             android:layout_weight="90"
             android:layout_width="0dp"

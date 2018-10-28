@@ -38,7 +38,6 @@ public class FragmentPicPreview extends DialogFragment {
         ImageView imageView = getView().findViewById(R.id.pic_preview_view);
         imageView.setImageURI(Uri.fromFile(image));
         imageView.setAdjustViewBounds(true);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
     }
 
     public void init(File image){

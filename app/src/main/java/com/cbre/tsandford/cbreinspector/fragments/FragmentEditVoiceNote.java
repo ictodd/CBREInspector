@@ -1,25 +1,16 @@
 package com.cbre.tsandford.cbreinspector.fragments;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.cbre.tsandford.cbreinspector.R;
-import com.cbre.tsandford.cbreinspector.misc.VoiceTagsListAdapter;
-
-import java.util.List;
 
 public class FragmentEditVoiceNote extends DialogFragment {
 

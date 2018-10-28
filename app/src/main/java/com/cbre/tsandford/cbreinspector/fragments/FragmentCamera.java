@@ -22,8 +22,8 @@ import android.widget.LinearLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
-import com.cbre.tsandford.cbreinspector.misc.CameraPreview;
-import com.cbre.tsandford.cbreinspector.misc.CameraSettings;
+import com.cbre.tsandford.cbreinspector.misc.camera.CameraPreview;
+import com.cbre.tsandford.cbreinspector.misc.camera.CameraSettings;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 import com.cbre.tsandford.cbreinspector.model.PictureItem;
 
@@ -245,7 +245,7 @@ public class FragmentCamera extends Fragment {
     }
 
     private void create_thumbnail(File pictureFile) {
-         Utils.ImageTools.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
+         Utils.Image.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
     }
 
     private void release_camera(){
