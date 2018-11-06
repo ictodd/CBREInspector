@@ -21,7 +21,7 @@ public class PictureItem extends Item {
     private final String REDUCED_SIZE_EXTENSION = "scaled";
 
     private List<Pic> picItems;
-    private final int MAX_ITEMS = 50;
+    private final int MAX_ITEMS = 10000;
 
     PictureItem(String item_name, String owner_name, String item_root_path, String extension){
         super(item_name, owner_name, item_root_path, extension);
@@ -29,6 +29,7 @@ public class PictureItem extends Item {
         populatePicItems();
     }
 
+    // Todo the max shouldnt count thumbnails
     private void populatePicItems(){
         List<File> allFiles = this.get_all_items_as_file_list(MAX_ITEMS);
         this.picItems.clear();

@@ -17,6 +17,7 @@ import android.widget.ViewFlipper;
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
+import com.cbre.tsandford.cbreinspector.model.notes.Notes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,6 +109,8 @@ public class FragmentNotes extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         SyncNotes_AppToFile();
+        //TEST_makeDataMap();
+        //TEST_tryReadJsonFile();
     }
 
     @Override
@@ -153,28 +156,53 @@ public class FragmentNotes extends Fragment implements View.OnClickListener {
 
     }
 
-    // todo make new json format
+    private void TEST_makeDataMap(){
+        Notes notes = new Notes();
+        notes.setType(Notes.Type.Hotel);
 
-    // example of new json format
-    /*
-            {
-          "Info":{
-            "notesType": "Hotel"
-          },
-          "Sections":{
-            "Public Areas":{
-              "Car Parking":{
-                "codename": "notes_public_areas_hotels_car_parking",
-                "content" : "She folded her handkerchief neatly.\nShe only paints with bold colors; she does not like pastels.\nI am never at home on Sundays."
-              },
-              "Food and Beverage":{
-                "codename": "notes_public_areas_hotels_car_parking",
-                "content" :"She folded her handkerchief neatly.\nShe only paints with bold colors; she does not like pastels.\nI am never at home on Sundays."
-              }
+        EditText noteField;
+        String noteName;
+        String noteContent;
+        View tempView;
+
+        ViewFlipper flipper = getActivity().findViewById(R.id.view_flipper);
+        for(int i = 0; i < flipper.getChildCount(); i++){
+            ViewGroup subLayout = (ViewGroup)viewFlipper.getChildAt(i);
+            Notes.Section section = new Notes.Section(Integer.toString(subLayout.getId()));
+
+
+            for(int j = 0; j < subLayout.getChildCount(); j ++){
+                tempView = subLayout.getChildAt(j);
+                if(tempView instanceof android.widget.EditText){
+                    try{
+                        noteField = (EditText)tempView;
+                        if(noteField.getTag() != null){
+                            noteName = noteField.getTag().toString();
+                            noteContent = noteField.getText().toString();
+
+                            Notes.NoteContent content = new Notes.NoteContent(noteName, noteName, noteContent, noteField.getClass().getName());
+                            section.addContent(content);
+                        }
+                    } catch(Exception ex){
+                        Log.d("TODD", "Failed to add EditText content. Error: " + ex.getMessage());
+                    }
+                }
             }
-          }
+
+            notes.addSection(section);
         }
-     */
+
+        String json = Utils.Json.getPrettyJsonObjects(notes.generateDataMap());
+        Utils.WriteToFile(json, AppState.RootPath + "/test.json");
+    }
+
+    private void TEST_tryReadJsonFile(){
+        String filepath = AppState.RootPath + "/test.json";
+        Map<String,Object> dataMap = Utils.Json.getMapObjects(filepath);
+        Notes notes = new Notes();
+        notes.populate(dataMap);
+    }
+
 
     private void AddEditTextViewsToHashMap(ViewGroup view, Map<String, String> resultToAddTo){
         EditText noteField;

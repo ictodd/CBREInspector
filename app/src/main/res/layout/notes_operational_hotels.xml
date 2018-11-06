@@ -36,7 +36,7 @@
         android:textSize="@dimen/notes_field_name_fontsize"/>
     <EditText
         android:id="@+id/notes_operational_hotels_competitive_set"
-        android:tag="notes_operational_hotels_staff_fte"
+        android:tag="notes_operational_hotels_competitive_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/futura_book"
@@ -74,7 +74,7 @@
         android:textSize="@dimen/notes_field_name_fontsize"/>
     <EditText
         android:id="@+id/notes_operational_hotels_demand_sources"
-        android:tag="notes_operational_hotels_location_str_and_weak"
+        android:tag="notes_operational_hotels_demand_sources"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/futura_book"

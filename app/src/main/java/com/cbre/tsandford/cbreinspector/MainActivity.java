@@ -2,8 +2,11 @@ package com.cbre.tsandford.cbreinspector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,15 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.cbre.tsandford.cbreinspector.fragments.FragmentCamera;
 import com.cbre.tsandford.cbreinspector.fragments.FragmentDictation;
 import com.cbre.tsandford.cbreinspector.fragments.FragmentDraw;
+import com.cbre.tsandford.cbreinspector.fragments.FragmentNewInspection;
 import com.cbre.tsandford.cbreinspector.fragments.FragmentNotes;
+import com.cbre.tsandford.cbreinspector.fragments.FragmentQuickNotes;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        this.fab = findViewById(R.id.fab);
+        this.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         if(savedInstanceState == null){
             loadHomeFragment();

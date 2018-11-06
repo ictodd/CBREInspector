@@ -28,6 +28,7 @@ import java.util.Map;
 public class FragmentNewInspection extends DialogFragment {
 
     // for passing data back to calling fragment
+    // Todo Creat on new inspection needs to load the inspection, not go to the list
     public interface CustomDialogListener{
         void onDialogClose(Map<String, String> new_inspection_data);
     }

@@ -39,4 +39,6 @@
         android:fontFamily="@font/futura_book"
         android:textSize="18sp"/>
 
+
+
 </LinearLayout>

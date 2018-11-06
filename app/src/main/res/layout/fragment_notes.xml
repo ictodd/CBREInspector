@@ -93,7 +93,6 @@
         </LinearLayout>
 
     </ScrollView>
-
     <ScrollView
         android:id="@+id/notes_main_scroll_view"
         android:layout_width="0dp"
@@ -119,6 +118,7 @@
             <include android:id="@+id/notes_operational_hotels_include" layout="@layout/notes_operational_hotels"/>
 
         </ViewFlipper>
+
 
 
     </ScrollView>

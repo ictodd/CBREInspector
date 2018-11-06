@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
+import com.cbre.tsandford.cbreinspector.misc.camera.CameraController;
 import com.cbre.tsandford.cbreinspector.misc.camera.CameraPreview;
 import com.cbre.tsandford.cbreinspector.misc.camera.CameraSettings;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
@@ -52,12 +53,13 @@ public class FragmentCamera extends Fragment {
     private final double THUMBNAIL_SCALE = 0.2;
     private final int THUMBNAIL_COMPRESSION = 30;
 
+    private CameraController cameraController;
+
     // the below is not used any more, but might be useful in the future if users
     // want to be able to take photos in different resolutions and ratios.
     private static final int JPEG_QUALITY = 50;
     private static final int PIC_WIDTH = 4032; // this stays static, height calc'd based on current settings
     private CameraSettings cameraSettings; // for height and width
-
 
     public FragmentCamera() {
         // Required empty public constructor
@@ -75,6 +77,31 @@ public class FragmentCamera extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        previewWindow = getActivity().findViewById(R.id.camera_preview_window);
+        cameraController = new CameraController(getActivity(), new CameraSettings(JPEG_QUALITY, PIC_WIDTH), previewWindow);
+        cameraController.setPhotoCallback(new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                String raw_photo_filename = AppState.ActiveInspection.pictures.get_new_resource().getPath();
+
+                Utils.MakeFile(raw_photo_filename);
+                File pictureFile = new File(raw_photo_filename);
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    fos.write(data);
+                    fos.close();
+                } catch (FileNotFoundException e) {
+                    Log.d(TAG, "File not found: " + e.getMessage());
+                } catch (IOException e) {
+                    Log.d(TAG, "Error accessing file: " + e.getMessage());
+                }
+
+                create_thumbnail(pictureFile);
+                reload_pics();
+                cameraController.restartCameraPreview();
+            }
+        });
 
         btnCamera = getActivity().findViewById(R.id.btn_camera);
         this.gallery_view = getActivity().findViewById(R.id.camera_gallery);
@@ -82,7 +109,7 @@ public class FragmentCamera extends Fragment {
         btnCamera.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                camera.takePicture(null, null, photo_callback);
+                cameraController.takePhoto();
             }
         });
 
@@ -94,13 +121,13 @@ public class FragmentCamera extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        release_camera();
+        cameraController.releaseCamera();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        set_up_camera();
+        cameraController.setUpCamera();
     }
 
     @Override
@@ -143,6 +170,7 @@ public class FragmentCamera extends Fragment {
         this.gallery_view.removeAllViews();
     }
 
+    // todo needs to be in date order with latest pic first
     private void reload_pics(){
         clear_gallery();
         inspectionPictures.RefreshItems();
@@ -185,75 +213,9 @@ public class FragmentCamera extends Fragment {
         this.gallery_view.addView(new_img_view, view_params);
     }
 
-    // endregion
-
-    // region Camera Controls
-
-    private void restart_camera_preview(){
-        camera.stopPreview();
-        camera.startPreview();
-    }
-
-    private Camera get_camera_instance(){
-        Camera c = null;
-        try {
-            c = Camera.open();
-        }
-        catch (Exception e){
-            Log.d(TAG, "Failed to open Camera");
-            e.printStackTrace();
-        }
-        return c;
-    }
-
-    private void set_up_camera(){
-        if(camera == null) {
-
-            camera = get_camera_instance();
-            cameraPreview = new CameraPreview(getActivity(),
-                                                camera,
-                                                new CameraSettings(JPEG_QUALITY, PIC_WIDTH));
-
-            previewWindow = getActivity().findViewById(R.id.camera_preview_window);
-
-            previewWindow.addView(cameraPreview);
-
-            photo_callback = new Camera.PictureCallback() {
-                @Override
-                public void onPictureTaken(byte[] data, Camera camera) {
-                    String raw_photo_filename = AppState.ActiveInspection.pictures.get_new_resource().getPath();
-
-                    Utils.MakeFile(raw_photo_filename);
-                    File pictureFile = new File(raw_photo_filename);
-
-                    try {
-                        FileOutputStream fos = new FileOutputStream(pictureFile);
-                        fos.write(data);
-                        fos.close();
-                    } catch (FileNotFoundException e) {
-                        Log.d(TAG, "File not found: " + e.getMessage());
-                    } catch (IOException e) {
-                        Log.d(TAG, "Error accessing file: " + e.getMessage());
-                    }
-
-                    create_thumbnail(pictureFile);
-                    reload_pics();
-                    restart_camera_preview();
-                }
-            };
-        }
-    }
-
     private void create_thumbnail(File pictureFile) {
-         Utils.Image.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
+        Utils.Image.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
     }
 
-    private void release_camera(){
-        if (this.camera != null){
-            this.camera.release();
-            this.camera = null;
-        }
-    }
-
-    //endregion
+    // endregion
 }
