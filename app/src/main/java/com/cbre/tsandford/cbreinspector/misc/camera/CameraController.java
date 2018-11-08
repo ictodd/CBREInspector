@@ -16,6 +16,11 @@ public class CameraController {
     private CameraSettings mSettings;
     private Camera.PictureCallback mPictureCallback;
 
+    // the below is not used any more, but might be useful in the future if users
+    // want to be able to take photos in different resolutions and ratios.
+    public static final int DEFAULT_JPEG_QUALITY = 50;
+    public static final int DEFAULT_PIC_WIDTH = 4032; // this stays static, height calc'd based on current settings
+
     public CameraController(Activity activity, CameraSettings cameraSettings, FrameLayout previewWindow){
         this.mActivity = activity;
         this.mSettings = cameraSettings;

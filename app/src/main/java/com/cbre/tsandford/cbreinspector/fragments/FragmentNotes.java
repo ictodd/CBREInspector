@@ -109,7 +109,7 @@ public class FragmentNotes extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         SyncNotes_AppToFile();
-        //TEST_makeDataMap();
+        TEST_makeDataMap();
         //TEST_tryReadJsonFile();
     }
 

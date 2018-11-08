@@ -55,12 +55,6 @@ public class FragmentCamera extends Fragment {
 
     private CameraController cameraController;
 
-    // the below is not used any more, but might be useful in the future if users
-    // want to be able to take photos in different resolutions and ratios.
-    private static final int JPEG_QUALITY = 50;
-    private static final int PIC_WIDTH = 4032; // this stays static, height calc'd based on current settings
-    private CameraSettings cameraSettings; // for height and width
-
     public FragmentCamera() {
         // Required empty public constructor
     }
@@ -78,7 +72,11 @@ public class FragmentCamera extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         previewWindow = getActivity().findViewById(R.id.camera_preview_window);
-        cameraController = new CameraController(getActivity(), new CameraSettings(JPEG_QUALITY, PIC_WIDTH), previewWindow);
+        cameraController = new CameraController(getActivity(),
+                                                new CameraSettings(
+                                                            CameraController.DEFAULT_JPEG_QUALITY,
+                                                            CameraController.DEFAULT_PIC_WIDTH),
+                                                previewWindow);
         cameraController.setPhotoCallback(new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
@@ -97,7 +95,7 @@ public class FragmentCamera extends Fragment {
                     Log.d(TAG, "Error accessing file: " + e.getMessage());
                 }
 
-                create_thumbnail(pictureFile);
+                Utils.Image.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
                 reload_pics();
                 cameraController.restartCameraPreview();
             }
@@ -128,6 +126,7 @@ public class FragmentCamera extends Fragment {
     public void onResume() {
         super.onResume();
         cameraController.setUpCamera();
+        cameraController.restartCameraPreview();
     }
 
     @Override
@@ -211,10 +210,6 @@ public class FragmentCamera extends Fragment {
         new_img_view.setBackground(background);
 
         this.gallery_view.addView(new_img_view, view_params);
-    }
-
-    private void create_thumbnail(File pictureFile) {
-        Utils.Image.ScaleImage(pictureFile, THUMBNAIL_SCALE, THUMBNAIL_COMPRESSION);
     }
 
     // endregion

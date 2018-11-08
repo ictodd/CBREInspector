@@ -1,5 +1,6 @@
 package com.cbre.tsandford.cbreinspector;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +24,12 @@ import com.cbre.tsandford.cbreinspector.fragments.FragmentNewInspection;
 import com.cbre.tsandford.cbreinspector.fragments.FragmentNotes;
 import com.cbre.tsandford.cbreinspector.fragments.FragmentQuickNotes;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
+import com.cbre.tsandford.cbreinspector.model.notes.NotesContentController;
+import com.cbre.tsandford.cbreinspector.model.notes.NotesMainController;
+import com.cbre.tsandford.cbreinspector.model.notes.NotesSectionController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -57,12 +63,24 @@ public class MainActivity extends AppCompatActivity
         this.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentQuickNotes frag = new FragmentQuickNotes();
+                AppState.ActiveInspection.restore_notes();
+                frag.setNotesTextContent(AppState.ActiveInspection.get_quick_note());
+                frag.setOnCloseDialogListener(new FragmentQuickNotes.CustomDialogListener() {
+                    @Override
+                    public void OnQuickNotesClose(String quickNotes) {
+                        AppState.ActiveInspection.update_quick_note(quickNotes);
+                        AppState.ActiveInspection.save_notes();
+                    }
+                });
+                frag.show(fm,"fragment_quick_notes");
             }
         });
 
         if(savedInstanceState == null){
             loadHomeFragment();
+            //TEST_loadGenericNotesFragment();
         }
     }
 
@@ -144,6 +162,66 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         loadNewFragment(homeFragment);
+    }
+
+    private void TEST_loadGenericNotesFragment(){
+        NotesMainController frag = new NotesMainController();
+
+        // TEST
+        List<NotesSectionController> testSectionControllers = new ArrayList<>();
+
+        String sectionNames[] = new String[]{"Section 1", "Section 2", "Section 3"};
+        NotesSectionController tmpSection;
+        int count = 0;
+        for(String name : sectionNames){
+            count++;
+
+            tmpSection = new NotesSectionController(name, getBaseContext());
+
+            tmpSection.setContentControllers(TEST_getRandomContent(count, getBaseContext()));
+
+            testSectionControllers.add(tmpSection);
+        }
+
+        frag.addSectionController(testSectionControllers);
+        loadNewFragment(frag);
+
+    }
+
+    private List<NotesContentController> TEST_getRandomContent(int sec, Context context){
+        String contentNames[] = null;
+        switch (sec){
+            case 1:
+                contentNames = new String[]{
+                        "Section 1 - Content 1",
+                        "Section 1 - Content 2",
+                        "Section 1 - Content 3"
+                };
+                break;
+            case 2:
+                contentNames = new String[]{
+                        "Section 2 - Content 1",
+                        "Section 2 - Content 2",
+                        "Section 2 - Content 3"
+                };
+                break;
+            case 3:
+                contentNames = new String[]{
+                        "Section 3 - Content 1",
+                        "Section 3 - Content 2",
+                        "Section 3 - Content 3"
+                };
+                break;
+        }
+
+        List<NotesContentController> result = new ArrayList<>();
+        NotesContentController tmp;
+        for(String n : contentNames){
+            tmp = new NotesContentController(context);
+            tmp.init(n, NotesContentController.Type.EditText);
+            result.add(tmp);
+        }
+        return result;
     }
 
 }

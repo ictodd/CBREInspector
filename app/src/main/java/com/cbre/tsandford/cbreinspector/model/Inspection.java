@@ -62,6 +62,7 @@ public class Inspection {
     public static String ADDRESS_KEY = "property_address";
     public static String NOTE_TYPE_KEY = "notes_type";
     public static String PATH_KEY = "inspect_path";
+    public static String QUICK_NOTES_KEY = "quick_notes";
 
     public static String NOTES_JSON = "notes.json";
     public static String INFO_JSON = "info.json";
@@ -173,6 +174,23 @@ public class Inspection {
         if(!Utils.FileHasContents(this.info_file_path))
             Utils.MakeFile(this.info_file_path);
         Utils.WriteToFile(info_as_json, this.info_file_path);
+    }
+
+    public String get_quick_note(){
+        if(notes.containsKey(QUICK_NOTES_KEY)){
+            return notes.get(QUICK_NOTES_KEY);
+        }else{
+            return "";
+        }
+
+    }
+
+    public void update_quick_note(String quickNoteContent){
+        if(notes.containsKey(QUICK_NOTES_KEY)){
+            notes.remove(QUICK_NOTES_KEY);
+        }
+
+        notes.put(QUICK_NOTES_KEY, quickNoteContent);
     }
 
     private void populate_inspection_info(){
