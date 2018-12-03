@@ -22,12 +22,18 @@ import android.widget.LinearLayout;
 import com.cbre.tsandford.cbreinspector.AppState;
 import com.cbre.tsandford.cbreinspector.R;
 import com.cbre.tsandford.cbreinspector.misc.PromptRunnable;
+import com.cbre.tsandford.cbreinspector.misc.voice.AudioConverter;
 import com.cbre.tsandford.cbreinspector.misc.voice.PlayButton;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
+import com.cbre.tsandford.cbreinspector.misc.voice.SpeechToTextController;
 import com.cbre.tsandford.cbreinspector.misc.voice.VoiceNoteCard;
 import com.cbre.tsandford.cbreinspector.misc.voice.VoiceNoteMetadata;
+import com.ibm.watson.developer_cloud.http.ServiceCallback;
+import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechRecognitionResults;
+import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.BaseRecognizeCallback;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,6 +53,8 @@ public class FragmentDictation extends Fragment {
     private MediaPlayer player = null;
     private String active_clip = null;
     private LinearLayout gallery_view_parent = null;
+
+    static String TAG = "FragDictation";
 
     // endregion
 
@@ -168,23 +176,30 @@ public class FragmentDictation extends Fragment {
     //endregion
 
     // region Recording Methods
-
     private void startRecording(){
-        active_clip = AppState.ActiveInspection.audio_clips.get_new_resource().getPath();
+        AppState.ActiveInspection.audio_clips.extension = "aac";
 
+        active_clip = AppState.ActiveInspection.audio_clips.get_new_resource().getPath();
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
         recorder.setOutputFile(active_clip);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
         try{
             recorder.prepare();
         }catch(IOException ex){
-            Log.d("TODD", "prepare() on starting recording failed");
+            Log.d(TAG, "prepare() on starting recording failed");
         }
 
-        recorder.start();
+        try{
+            recorder.start();
+        }catch(Exception ex){
+            Log.d(TAG, "start() on recording failed");
+            ex.printStackTrace();
+        }
+
+
     }
 
     private void stopRecording(){
@@ -202,11 +217,76 @@ public class FragmentDictation extends Fragment {
         if(recording){
             record_btn.setImageResource(R.drawable.microphone_disabled);
             stopRecording();
+
+            final AudioConverter converter = new AudioConverter(getContext());
+            converter.setCallbackHandler(new AudioConverter.OnFinishCallBackHandler() {
+                @Override
+                public void Success() {
+                    File newFile = converter.getOutputFile();
+                    transcribe(newFile);
+                }
+
+                @Override
+                public void Failure() {
+
+                }
+            });
+
+            converter.convert(new File(active_clip), AudioConverter.AudioFormat.FLAC);
+
         }else{
             record_btn.setImageResource(R.drawable.microphone_recording);
             startRecording();
         }
         recording = !recording;
+    }
+
+    private void transcribe(File f){
+        SpeechToTextController speechToTextController = new SpeechToTextController();
+        speechToTextController.setServiceCallback(new ServiceCallback() {
+            @Override
+            public void onResponse(Object response) {
+                Log.d(TAG, "transcribe got a response");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d(TAG, "transcribe failed: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+
+        speechToTextController.setBaseRecogCallback(new BaseRecognizeCallback(){
+
+            @Override
+            public void onConnected() {
+                Log.d(TAG,"Web socket connected.");
+            }
+
+            @Override
+            public void onDisconnected() {
+                Log.d(TAG,"Web socket disconnected.");
+            }
+
+            @Override
+            public void onTranscription(SpeechRecognitionResults speechResults) {
+                Log.d(TAG,"Got results.");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d(TAG,"Web socket error. Error: " + e.getMessage());
+            }
+
+        });
+
+        try {
+            Log.d(TAG,"Trying to get transcription of " + f.getPath());
+            speechToTextController.getTranscription(f);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
     // region Gallery Methods

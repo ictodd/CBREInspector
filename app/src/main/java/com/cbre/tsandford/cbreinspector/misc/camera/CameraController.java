@@ -68,9 +68,9 @@ public class CameraController {
         if(mCamera == null){
             mCamera = getCameraInstance();
             mPreview = new CameraPreview(mActivity, mCamera, mSettings);
+            mPreview.setUpSensorController(mActivity);
             mFrame.addView(mPreview);
         }
     }
-
 
 }

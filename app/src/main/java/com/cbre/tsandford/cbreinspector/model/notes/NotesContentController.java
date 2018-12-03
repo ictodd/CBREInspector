@@ -2,11 +2,14 @@ package com.cbre.tsandford.cbreinspector.model.notes;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -80,7 +83,7 @@ public class NotesContentController extends LinearLayout {
                 // Todo write table content view
                 break;
             case Checkbox:
-                // Todo write checkbox content view
+                mContentView = setUpCheckBox();
                 break;
             case ComboBox:
                 // Todo write checkbox content view
@@ -101,7 +104,20 @@ public class NotesContentController extends LinearLayout {
         result.setLayoutParams(params);
         result.setPadding(5,5,5,5);
         result.setTextSize(15);
+        result.setMinimumHeight(10);
+        Drawable background = getResources().getDrawable(R.drawable.full_border_thin);
+        result.setBackground(background);
+
         return result;
+    }
+
+    private CheckBox setUpCheckBox(){
+        CheckBox checkBox = new CheckBox(getContext());
+        LinearLayout.LayoutParams params = getDefaultParams();
+        checkBox.setBackground(getResources().getDrawable(R.drawable.full_border_thin));
+        checkBox.setText("New Checkbox Text");
+        checkBox.setLayoutParams(params);
+        return checkBox;
     }
 
     private LayoutParams getDefaultParams(){

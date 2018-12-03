@@ -1,5 +1,6 @@
 package com.cbre.tsandford.cbreinspector.misc.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -11,6 +12,8 @@ import android.view.SurfaceView;
 import com.cbre.tsandford.cbreinspector.misc.Utils;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Camera mCamera;
     private Camera.Size mCurrentSize;
     private float mDist;
+    private int mDefaultExposureCompensation;
+    private SensorController mSensorController;
+
+    private static final String TAG = "CameraPreview";
 
     private CameraSettings mCameraSettings;
 
@@ -30,6 +37,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mCamera = camera;
 
         mCameraSettings = cameraSettings;
+        mDefaultExposureCompensation = mCamera.getParameters().getExposureCompensation();
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
@@ -37,6 +45,48 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mHolder.addCallback(this);
         // deprecated setting, but required on Android versions prior to 3.0
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+    }
+
+    public void setUpSensorController(Activity activity) {
+        mSensorController = new SensorController(activity, new SensorController.SensorCallback() {
+            @Override
+            public void OnSensorChanged(float lightValue) {
+                setLightExposureBasedOnLightLevel(lightValue);
+            }
+
+            @Override
+            public void OnAccuracyChanged(int accuracy) {
+
+            }
+        });
+    }
+
+
+    public void setLightExposureBasedOnLightLevel(float lightQuantity){
+        // todo write method
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+        Log.d(TAG, String.format("new light quantity: " + df.format(lightQuantity)));
+    }
+
+    public void turnOnLowLightExposure(){
+        Camera.Parameters params = mCamera.getParameters();
+        params.setExposureCompensation(params.getMaxExposureCompensation());
+        if(params.isAutoExposureLockSupported()){
+            params.setAutoExposureLock(false);
+        }
+        mCamera.setParameters(params);
+    }
+
+
+    public void turnOffLowLightExposure(){
+        Camera.Parameters params = mCamera.getParameters();
+        params.setExposureCompensation(mDefaultExposureCompensation);
+        if(params.isAutoExposureLockSupported()){
+            params.setAutoExposureLock(false);
+        }
+        mCamera.setParameters(params);
     }
 
     public void set_camera_settings(CameraSettings new_settings){

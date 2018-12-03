@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         if(savedInstanceState == null){
-            loadHomeFragment();
-            //TEST_loadGenericNotesFragment();
+            //loadHomeFragment();
+            TEST_loadGenericNotesFragment();
         }
     }
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity
         NotesContentController tmp;
         for(String n : contentNames){
             tmp = new NotesContentController(context);
-            tmp.init(n, NotesContentController.Type.EditText);
+            tmp.init(n, NotesContentController.Type.Checkbox);
             result.add(tmp);
         }
         return result;

@@ -1,5 +1,6 @@
 package com.cbre.tsandford.cbreinspector.misc;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -344,7 +345,8 @@ public class Utils {
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.CAMERA,
-                android.Manifest.permission.RECORD_AUDIO
+                android.Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.INTERNET
         };
 
         for(String permission: permissions){
@@ -438,7 +440,6 @@ public class Utils {
         return dtf.format(now);
     }
 
-    // todo change all use of Date to Calendar in app
     public static Calendar toCalendar(Date date){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
